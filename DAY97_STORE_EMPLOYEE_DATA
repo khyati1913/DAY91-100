@@ -1,0 +1,62 @@
+Q147: Store employee data in a binary file using fwrite() and read using fread().
+
+/*
+Sample Test Cases:
+Input 1:
+Employee details entered and stored in file.
+Output 1:
+Displays employee data read from file.
+
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Employee {
+    int id;
+    char name[30];
+    float salary;
+};
+
+int main() {
+    struct Employee emp, empRead;
+    FILE *fp;
+
+    // Writing to binary file
+    fp = fopen("employee.bin", "wb");
+    if (fp == NULL) {
+        printf("Error opening file!\n");
+        exit(1);
+    }
+
+    printf("Enter Employee ID: ");
+    scanf("%d", &emp.id);
+
+    printf("Enter Employee Name: ");
+    scanf("%s", emp.name);
+
+    printf("Enter Employee Salary: ");
+    scanf("%f", &emp.salary);
+
+    // Writing structure to file
+    fwrite(&emp, sizeof(emp), 1, fp);
+    fclose(fp);
+    printf("\nEmployee details entered and stored in file.\n");
+
+    // Reading from binary file
+    fp = fopen("employee.bin", "rb");
+    if (fp == NULL) {
+        printf("Error opening file!\n");
+        exit(1);
+    }
+
+    fread(&empRead, sizeof(empRead), 1, fp);
+    fclose(fp);
+
+    printf("\nDisplaying Employee Details Read From File:\n");
+    printf("ID: %d\n", empRead.id);
+    printf("Name: %s\n", empRead.name);
+    printf("Salary: %.2f\n", empRead.salary);
+
+    return 0;
+}
